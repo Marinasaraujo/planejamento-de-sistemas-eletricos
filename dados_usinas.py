@@ -2,15 +2,16 @@ lista_uhe = []
 lista_ute = []
 
 usina_h1 = {
-    "Nome": "UHE_1",
-    "Vmax": 100.,
-    "Vmin": 20.,
-    "Prod": 0.95,
-    "Engol": 60.,
+    "Nome": "Santa Branca",
+    "Vinicial":254.2,
+    "Vmax": 439.,
+    "Vmin": 131.,
+    "Prod": 0.1314,
+    "Engol": 339.21,
     "Afl": [
-        [23,16],
-        [19,14],
-        [15,11]
+        [173.4, 84.5],
+        [191.28, 104.72],
+        [213.58, 128.04]
     ]
 }
 lista_uhe.append(usina_h1)
@@ -30,23 +31,23 @@ lista_uhe.append(usina_h1)
 # lista_uhe.append(usina_h2)
 
 usina_t1 = {
-    "Nome": "GT_1",
-    "Cap": 15.,
-    "Custo": 10.
+    "Nome": "Santa Luz",
+    "Cap": 12.,
+    "Custo": 581.48*720
 }
 lista_ute.append(usina_t1)
 
 usina_t2 = {
-    "Nome": "GT_2",
-    "Cap": 10.,
-    "Custo": 25.
+    "Nome": "Baliza",
+    "Cap": 18.,
+    "Custo": 917.12*720
 }
 lista_ute.append(usina_t2)
 
 info_geral = {
-    "Custo_def": 500.,
-    "Carga": [100,100.,100],
-    "Nr_Disc": 12,  # volumes iniciais
+    "Custo_def": 8291*720,
+    "Carga": [50,50.,50],
+    "Nr_Disc": 3,  # volumes iniciais
     "Nr_Est": 3,  # meses
     "Nr_Cen": 2,  # otimista e pessimista
     "Num_UHE": len(lista_uhe),
