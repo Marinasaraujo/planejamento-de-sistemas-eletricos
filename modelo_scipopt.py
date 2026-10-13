@@ -7,6 +7,7 @@ def despacho(sistema, VI, AFL, cortes, mes_futuro, imprime):
     num_UTE = len(sistema["UTE"])
 
     modelo = Model("despacho_hidrotermico")
+    modelo.hideOutput()
 
     # Configurações para consultar os duais (multp lagrange) do problema 
     modelo.setPresolve(SCIP_PARAMSETTING.OFF)
