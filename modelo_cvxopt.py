@@ -1,6 +1,7 @@
 from cvxopt.modeling import variable, solvers, op
 import resultados
 
+solvers.options["glpk"] = {"msg_lev": "GLP_MSG_OFF"}
 
 def despacho(sistema, VI, AFL, cortes, mes_futuro, imprime):
 
