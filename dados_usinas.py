@@ -15,19 +15,19 @@ usina_h1 = {
 }
 lista_uhe.append(usina_h1)
 
-usina_h2 = {
-    "Nome": "UHE_2",
-    "Vmax": 200.,
-    "Vmin": 40.,
-    "Prod": 0.85,
-    "Engol": 100.,
-    "Afl": [
-        [46,38],
-        [30,28],
-        [30,22]
-    ]
-}
-lista_uhe.append(usina_h2)
+# usina_h2 = {
+#     "Nome": "UHE_2",
+#     "Vmax": 200.,
+#     "Vmin": 40.,
+#     "Prod": 0.85,
+#     "Engol": 100.,
+#     "Afl": [
+#         [46,38],
+#         [30,28],
+#         [30,22]
+#     ]
+# }
+# lista_uhe.append(usina_h2)
 
 usina_t1 = {
     "Nome": "GT_1",
@@ -48,7 +48,10 @@ info_geral = {
     "Carga": [100,100.,100],
     "Nr_Disc": 12,  # volumes iniciais
     "Nr_Est": 3,  # meses
-    "Nr_Cen": 2  # otimista e pessimista
+    "Nr_Cen": 2,  # otimista e pessimista
+    "Num_UHE": len(lista_uhe),
+    "Num_UTE": len(lista_ute),
+    "Otimizador": "cvxopt"
 }
 
 sistema = {  # Dicionário de um dicionario e de listas de dicionários
@@ -56,9 +59,6 @@ sistema = {  # Dicionário de um dicionario e de listas de dicionários
     "UHE": lista_uhe,
     "UTE": lista_ute
 }
-
-num_UHE = len(sistema["UHE"])
-num_UTE = len(sistema["UTE"])
 
 if __name__ == "__main__":  # Só printará se eu rodar dados_usinas.py diretamente, se só importar dados_usinas não há print
     print(len(lista_uhe))
