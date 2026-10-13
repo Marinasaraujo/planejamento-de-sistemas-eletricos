@@ -21,8 +21,32 @@ VI_mes1 = []
 for uhe in dados_usinas.sistema["UHE"]:
     VI_mes1.append(float(uhe["Vinicial"]))
 
+geral = dados_usinas.sistema["Geral"]
+
+print("\nCONFIGURAÇÃO DO TESTE")
+print("Otimizador:", geral["Otimizador"])
+print("Número de meses:", geral["Nr_Est"])
+print("Discretizações por UHE:", geral["Nr_Disc"])
+print("Cenários por estágio:", geral["Nr_Cen"])
+print("Carga (MW médios):", geral["Carga"])
+print("Volumes iniciais conhecidos (hm³):", VI_mes1)
+
 # Mes
 for iest in np.arange(dados_usinas.sistema["Geral"]["Nr_Est"], 0, -1):   # [3, 2, 1]
+  print(
+    f"\nESTÁGIO {iest} | "
+    f"Carga: {geral['Carga'][iest - 1]} MW médios"
+  )
+
+  print(
+      f"{'VI (hm³)':<22}"
+      f"{'Total (R$ mi)':>16}"
+      f"{'Futuro (R$ mi)':>17}"
+      f"{'Déficit médio':>16}"
+      f"{'Déficit máximo':>17}"
+  )
+
+
   if iest > 1 and dados_usinas.sistema["Geral"]["Num_UHE"] == 1:
     plt.figure(iest)
     plt.title("Funcao de custo futuro - Estágio" + str(iest))
@@ -62,6 +86,9 @@ for iest in np.arange(dados_usinas.sistema["Geral"]["Nr_Est"], 0, -1):   # [3, 2
       eixox.append(VI[0])
     media = 0.
     media_cma = []
+    soma_custo_futuro = 0.0
+    soma_deficit = 0.0
+    maior_deficit = 0.0
     for i, uhe in enumerate(dados_usinas.sistema["UHE"]):
         media_cma.append(0)
 
@@ -72,14 +99,32 @@ for iest in np.arange(dados_usinas.sistema["Geral"]["Nr_Est"], 0, -1):   # [3, 2
         AFL.append(uhe["Afl"][iest-1][icen]) # iest-1 pois a lista começa em 0 não em 1
 
       if dados_usinas.sistema["Geral"]["Otimizador"] == "cvxopt":
-        resultado = modelo_cvxopt.despacho(dados_usinas.sistema, VI, AFL, cortes, iest+1, imprime = True)
+        resultado = modelo_cvxopt.despacho(dados_usinas.sistema, VI, AFL, cortes, iest+1, imprime = False)
       elif dados_usinas.sistema["Geral"]["Otimizador"] == "scipopt":  
-        resultado = modelo_scipopt.despacho(dados_usinas.sistema, VI, AFL, cortes, iest+1, imprime = True)
+        resultado = modelo_scipopt.despacho(dados_usinas.sistema, VI, AFL, cortes, iest+1, imprime = False)
 
+      soma_custo_futuro += resultado["Geral"]["Custo futuro"]
+      deficit_cenario = resultado["Geral"]["Deficit"]
+      soma_deficit += deficit_cenario
+      maior_deficit = max(maior_deficit, deficit_cenario)
       media += resultado["Geral"]["Custo total"]
+
       for i, uhe in enumerate(resultado["UHE"]):
         media_cma[i] += uhe["cma"]
+
     media = media/dados_usinas.sistema["Geral"]["Nr_Cen"]
+    media_custo_futuro = soma_custo_futuro/dados_usinas.sistema["Geral"]["Nr_Cen"]
+    media_deficit = soma_deficit/dados_usinas.sistema["Geral"]["Nr_Cen"]
+
+    volumes = ", ".join(f"{volume:.2f}" for volume in VI)
+
+    print(
+        f"{volumes:<22}"
+        f"{media / 1e6:>16,.4f}"
+        f"{media_custo_futuro / 1e6:>17,.4f}"
+        f"{max(0.0, media_deficit):>16.4f}"
+        f"{maior_deficit:>17.4f}"
+    )
 
     if iest > 1 and dados_usinas.sistema["Geral"]["Num_UHE"] == 2:
       for linha in range(dados_usinas.sistema["Geral"]["Nr_Disc"]):
