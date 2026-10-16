@@ -32,13 +32,30 @@ def despacho(sistema, VI, AFL, cortes, mes_futuro, imprime):
     deficit = modelo.addVar("def", lb=0)
     alpha = modelo.addVar("alpha", lb=0)
 
+    indice_por_id = {
+        uhe["ID"]: i
+        for i, uhe in enumerate(sistema["UHE"])
+    }
+    #     indice_por_id = {
+    #     1: 0,  # Paraibuna
+    #     2: 1,  # Santa Branca
+    # }
+
     balanco_hidrico = []
-    # Balanço hídrico e atendimento à carga
+
     for i, uhe in enumerate(sistema["UHE"]):
+        id_montante = uhe["Montante"]
+        if id_montante is None:
+            entrada_montante = 0
+        else:
+            m = indice_por_id[id_montante]
+            entrada_montante = vt[m] + vv[m]
+
         restricao = modelo.addCons(
-            vf[i] == VI[i] + AFL[i] - vt[i] - vv[i],
-            name=f"balanco_hidrico_{i}"
+            vf[i] == (VI[i]+ AFL[i]+ entrada_montante- vt[i]- vv[i]),
+            name=f"balanco_hidrico_{uhe['ID']}"
         )
+
         balanco_hidrico.append(restricao)
 
     # Atendimento à demanda

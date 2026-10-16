@@ -34,9 +34,22 @@ def despacho(sistema, VI, AFL, cortes, mes_futuro, imprime):
 
   restricoes = []
 
+  indice_por_id = {
+      uhe["ID"]: i
+      for i, uhe in enumerate(sistema["UHE"])
+  }
+
   # Balanço Hidrico
   for i, uhe in enumerate(sistema["UHE"]):
-    restricoes.append(vf[i] == float(VI[i]) + float(AFL[i]) - vt[i] - vv[i]) # Faltam as discretizações
+      id_montante = uhe["Montante"]
+      if id_montante is None:
+          entrada_montante = 0
+      else:
+          m = indice_por_id[id_montante]
+          entrada_montante = vt[m] + vv[m]
+
+      restricoes.append(vf[i] == (float(VI[i]) + float(AFL[i]) + entrada_montante - vt[i] - vv[i]))
+
 
   # Atendimento à demanda -> Fornece CMO
   AD = 0

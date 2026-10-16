@@ -43,7 +43,6 @@ for iest in np.arange(dados_usinas.sistema["Geral"]["Nr_Est"], 0, -1):   # [3, 2
       f"{'Total (R$ mi)':>16}"
       f"{'Futuro (R$ mi)':>17}"
       f"{'Déficit médio':>16}"
-      f"{'Déficit máximo':>17}"
   )
 
 
@@ -106,7 +105,6 @@ for iest in np.arange(dados_usinas.sistema["Geral"]["Nr_Est"], 0, -1):   # [3, 2
       soma_custo_futuro += resultado["Geral"]["Custo futuro"]
       deficit_cenario = resultado["Geral"]["Deficit"]
       soma_deficit += deficit_cenario
-      maior_deficit = max(maior_deficit, deficit_cenario)
       media += resultado["Geral"]["Custo total"]
 
       for i, uhe in enumerate(resultado["UHE"]):
@@ -123,7 +121,6 @@ for iest in np.arange(dados_usinas.sistema["Geral"]["Nr_Est"], 0, -1):   # [3, 2
         f"{media / 1e6:>16,.4f}"
         f"{media_custo_futuro / 1e6:>17,.4f}"
         f"{max(0.0, media_deficit):>16.4f}"
-        f"{maior_deficit:>17.4f}"
     )
 
     if iest > 1 and dados_usinas.sistema["Geral"]["Num_UHE"] == 2:
