@@ -135,6 +135,8 @@ for iest in np.arange(dados_usinas.sistema["Geral"]["Nr_Est"], 0, -1):   # [3, 2
     termo_ind = media
 
     for i, uhe in enumerate(resultado["UHE"]):
+      # o cma em cada volume fornece o coef angular da reta que passaria por ele
+      # por isso não é preciso interligar pontos de 2 volumes diferentes para fazer uma reta
       media_cma[i] = - media_cma[i]/dados_usinas.sistema["Geral"]["Nr_Cen"]  # mesmo as retas sendo decrescentes os valores de cma estão padronizados como positivos em ambos os solvers
       termo_ind -= VI[i]*media_cma[i]
     corte = {

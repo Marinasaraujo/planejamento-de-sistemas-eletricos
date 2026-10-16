@@ -1,9 +1,44 @@
 lista_uhe = []
 lista_ute = []
 
-usina_h1 = {
+# usina_paraibuna = {
+#     "Nome": "Paraibuna",
+#     "ID": 1,
+#     "Jusante": 2,
+#     "Vinicial":3110.33,
+#     "Vmax": 4732.,
+#     "Vmin": 2096.,
+#     "Prod": 0.26,
+#     "Engol": 317.9,
+#     "Afl": [
+#         [154.71648, 74.18304],
+#         [168.03936, 92.76768],
+#         [188.77536, 110.67840]
+#     ]
+#     # "Afl": [
+#     #     [360.28800, 182.16576],
+#     #     [401.52672, 178.74432],
+#     #     [350.23104, 171.90144],
+#     #     [262.54368, 138.87936],
+#     #     [195.02208, 115.18848],
+#     #     [181.02528, 94.08960],
+#     #     [150.20640, 88.87968],
+#     #     [131.75136, 81.75168],
+#     #     [154.71648, 74.18304],
+#     #     [168.03936, 92.76768],
+#     #     [188.77536, 110.67840],
+#     #     [269.20512, 132.06240]
+#     # ]
+
+# }
+# lista_uhe.append(usina_paraibuna)
+
+
+usina_santabranca = {
     "Nome": "Santa Branca",
-    "Vinicial":254.2,
+    "ID": 2,
+    "Jusante": None, 
+    "Vinicial":256.1,
     "Vmax": 439.,
     "Vmin": 131.,
     "Prod": 0.1314,
@@ -28,21 +63,8 @@ usina_h1 = {
     #     [306.19296, 149.16960]   
     # ]
 }
-lista_uhe.append(usina_h1)
+lista_uhe.append(usina_santabranca)
 
-# usina_h2 = {
-#     "Nome": "UHE_2",
-#     "Vmax": 200.,
-#     "Vmin": 40.,
-#     "Prod": 0.85,
-#     "Engol": 100.,
-#     "Afl": [
-#         [46,38],
-#         [30,28],
-#         [30,22]
-#     ]
-# }
-# lista_uhe.append(usina_h2)
 
 usina_t1 = {
     "Nome": "Santa Luz",
@@ -61,8 +83,8 @@ lista_ute.append(usina_t2)
 info_geral = {
     "Custo_def": 8291*720,
     #"Carga": [50.,50.,50.,50.,50.,50.,50.,50.,50.,50.,50.,50.],
-    "Carga": [50.,50.,50.],
-    "Nr_Disc": 10,  # volumes iniciais
+    "Carga": [80.,80.,80.],
+    "Nr_Disc": 3,  # volumes iniciais
     "Nr_Est": 3,  # meses
     "Nr_Cen": 2,  # otimista e pessimista
     "Num_UHE": len(lista_uhe),

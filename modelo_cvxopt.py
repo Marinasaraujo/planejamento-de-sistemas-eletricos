@@ -79,7 +79,7 @@ def despacho(sistema, VI, AFL, cortes, mes_futuro, imprime):
       restricoes.append(alpha[0] >= equacao)
 
   problema = op(fob, restricoes)
-  problema.solve('dense', 'glpk') # dense nao usa matrizes esparças
+  problema.solve('dense', 'glpk') 
 
   if problema.status != "optimal":
       raise RuntimeError(
